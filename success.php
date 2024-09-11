@@ -6,17 +6,17 @@
 
     if (!empty($fullname) || !empty($email) || !empty($subject) || !empty($comments)){
         $host = "localhost";
-        $dbUsername = "tcaterer_vininsurecontactentry";
-        $dbPassword = "DakshJi@#$%001";
-        $dbName = "tcaterer_thevininsurecontact";
+        $dbUsername = "db_username";
+        $dbPassword = "db_password";
+        $dbName = "db_name";
         
         // Create Connection
         $conn = new mysqli($host, $dbUsername, $dbPassword, $dbName);
         if (mysqli_connect_error()){
             die('Connect Error('. mysqli_connect_errno(). ')'. mysqli_connect_error ());
         } else {
-            $SELECT = "SELECT email FROM tcaterer_vininsurecontact WHERE email = ? LIMIT 1";
-            $INSERT = "INSERT INTO tcaterer_vininsurecontact (fullname, email, subject, comments) VALUES (?, ?, ?, ?)";
+            $SELECT = "SELECT email FROM db_tablename WHERE email = ? LIMIT 1";
+            $INSERT = "INSERT INTO db_tablename (fullname, email, subject, comments) VALUES (?, ?, ?, ?)";
             
             // Prepare statement
             $stmt = $conn->prepare($SELECT);
@@ -33,7 +33,7 @@
                 $stmt->execute();
                 
                 // Send email
-                $to = "info@thevintageinsurance.com";
+                $to = "info@example.com";
                 $subject = "New Contact Form Submission by ".$fullname;
                 $message = "
                 Name: $fullname\n
@@ -42,7 +42,7 @@
                 Message: $comments
                 ";
                 $headers = "From: $email\r\n";
-                $headers .= "CC: rupeshah@t2caterers.com";  // Add CC email address here
+                $headers .= "CC: test@example.com";  // Add CC email address here
 
                 if (mail($to, $subject, $message, $headers)) {
                     echo "We have received your details. We'll get back to you";
